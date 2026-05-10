@@ -5,7 +5,7 @@ from app.core.database import get_db
 from app.core.security import get_current_user
 from app.models.user import User, Task, Project, ProjectMember
 from app.schemas.schemas import UserAnalytics, WorkforceOverview, UserBase
-from mistralai.client.sdk import Mistral
+from mistralai import Mistral
 from app.core.config import settings
 import json
 
