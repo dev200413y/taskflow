@@ -287,7 +287,7 @@
 const { useState, useEffect, useCallback, useRef } = React;
 
 // ─── CONFIG ───────────────────────────────────────────────────────────────────
-const API = (window.API_BASE_URL || 'http://localhost:8000') + '/api/v1';
+const API = (window.API_BASE_URL || 'https://taskflow-production-2212b.up.railway.app') + '/api/v1';
 
 // ─── API HELPERS ──────────────────────────────────────────────────────────────
 const getToken = () => localStorage.getItem('access_token');
