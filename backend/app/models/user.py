@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Boolean, DateTime, ForeignKey, Enum, Text
+from sqlalchemy import Column, Integer, String, Boolean, DateTime, ForeignKey, Text
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 from app.core.database import Base
@@ -27,7 +27,7 @@ class User(Base):
     name = Column(String(100), nullable=False)
     email = Column(String(255), unique=True, index=True, nullable=False)
     hashed_password = Column(String(255), nullable=False)
-    role = Column(Enum(RoleEnum), default=RoleEnum.member, nullable=False)
+    role = Column(String(20), default="member", nullable=False)
     avatar_color = Column(String(7), default="#6366f1")
     is_active = Column(Boolean, default=True)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
@@ -99,8 +99,8 @@ class Task(Base):
     id = Column(Integer, primary_key=True, index=True)
     title = Column(String(300), nullable=False)
     description = Column(Text, nullable=True)
-    status = Column(Enum(TaskStatusEnum), default=TaskStatusEnum.todo, nullable=False)
-    priority = Column(Enum(TaskPriorityEnum), default=TaskPriorityEnum.medium, nullable=False)
+    status = Column(String(20), default="todo", nullable=False)
+    priority = Column(String(20), default="medium", nullable=False)
     project_id = Column(Integer, ForeignKey("projects.id", ondelete="CASCADE"), nullable=False)
     assignee_id = Column(Integer, ForeignKey("users.id", ondelete="SET NULL"), nullable=True)
     creator_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
