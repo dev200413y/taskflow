@@ -18,7 +18,7 @@ from app.models.user import User, Project, ProjectMember, Task, Comment, Activit
 # Create all tables
 try:
     logger.info("Connecting to database and creating tables...")
-    # Base.metadata.drop_all(bind=engine) # Uncomment if schema reset is needed
+    Base.metadata.drop_all(bind=engine) # FORCING RESET FOR SCHEMA FIX
     Base.metadata.create_all(bind=engine)
     logger.info("Database tables verified/created successfully.")
 except Exception as e:
