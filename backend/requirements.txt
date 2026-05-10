@@ -9,4 +9,4 @@ python-multipart>=0.0.9
 pydantic[email]>=2.11.2
 pydantic-settings>=2.5.0
 python-dotenv>=1.0.1
-mistralai>=1.0.0
+mistralai==1.2.6
