@@ -44,7 +44,7 @@ def health():
     return {"status": "healthy"}
 
 # Serve frontend - index.html at root and all other routes
-FRONTEND_PATH = os.path.join(os.path.dirname(__file__), "..", "frontend", "index.html")
+FRONTEND_PATH = os.path.join(os.path.dirname(__file__), "frontend", "index.html")
 
 @app.get("/")
 @app.get("/app")
