@@ -1,8 +1,11 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse
+from fastapi.staticfiles import StaticFiles
 from app.core.database import engine, Base
 from app.core.config import settings
 from app.routers import auth, projects, tasks, dashboard, ai, teams, analytics
+import os
 
 # Import models to register them with Base
 from app.models.user import User, Project, ProjectMember, Task, Comment, ActivityLog, Team, TeamMember
@@ -21,7 +24,7 @@ app = FastAPI(
 # CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[settings.FRONTEND_URL, "http://localhost:5173", "http://localhost:3000", "*"],
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -36,10 +39,16 @@ app.include_router(teams.router, prefix="/api/v1")
 app.include_router(analytics.router, prefix="/api/v1")
 app.include_router(ai.router, prefix="/api/v1")
 
-@app.get("/")
-def root():
-    return {"message": "Team Task Manager API", "version": "1.0.0", "docs": "/docs"}
-
 @app.get("/health")
 def health():
     return {"status": "healthy"}
+
+# Serve frontend - index.html at root and all other routes
+FRONTEND_PATH = os.path.join(os.path.dirname(__file__), "..", "frontend", "index.html")
+
+@app.get("/")
+@app.get("/app")
+def serve_frontend():
+    if os.path.exists(FRONTEND_PATH):
+        return FileResponse(FRONTEND_PATH)
+    return {"message": "Team Task Manager API", "version": "1.0.0", "docs": "/docs"}
