@@ -1,4 +1,4 @@
-from pydantic import BaseModel, EmailStr, Field, validator
+from pydantic import BaseModel, EmailStr, Field, field_validator
 from typing import Optional, List
 from datetime import datetime
 from enum import Enum
@@ -28,7 +28,8 @@ class UserRegister(BaseModel):
     password: str = Field(..., min_length=8, max_length=100)
     role: RoleEnum = RoleEnum.member
 
-    @validator('password')
+    @field_validator('password')
+    @classmethod
     def password_complexity(cls, v):
         import re
         if not re.search(r"[A-Z]", v):
